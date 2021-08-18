@@ -1,0 +1,15 @@
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+        </button>
+
+
+        <div class="row">
+    <div class=" btn btn-primary col-lg-8 col-lg-10 mx-auto">
+        <a class="btn btn-primary float-left" href="{% url 'category' category_politic%}">{% trans "Политика" %}</a>
+        <a class="btn btn-primary float-left" href="{% url 'category' category_sport%}">{% trans "Спорт" %}</a>
+        <a class="btn btn-primary float-left" href="{% url 'category' category_society%}">{% trans "Общество" %}</a>
+        <a class="btn btn-primary float-left" href="{% url 'category' category_science%}">{% trans "Наука" %}</a>
+        <a class="btn btn-primary float-right" href="{% url 'post_search' %}">{% trans "Поиск по статьям" %}</a><br>
+    </div>
+    <div class="col-lg-8 col-lg-10 mx-auto">

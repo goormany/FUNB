@@ -1,0 +1,84 @@
+{% extends 'accounts/base_profile.html' %}
+{% comment %} {% load accounts_filters %} {% endcomment %}
+{% load i18n %}
+{% load tz %}
+
+
+
+{% block head_title %}{% trans "Кабинет пользователя" %}{% endblock head_title %}
+
+
+{% block header %}
+<h2 style="text-align: center;"> &nbsp; &nbsp;{% trans "Кабинет пользователя" %}</h2><br>
+{% endblock header %}
+
+{% block little_header %}
+{% if is_not_author %}
+<p>{% trans "Если вы желаете публиковать новости и статьи, вам нужно зарегистрироваться в качестве автора" %}</p>
+<div class="col-lg-8 col-lg-10 mx-auto">
+    <a class="btn btn-primary float-center" href="{% url 'be_author' %}">{% trans "Стать автором" %}</a><br>
+</div>
+{% else %}
+<p>{% trans "У вас статус автора. Вы можете публиковать, редактировать и удалять статьи и новости" %}</p>
+{% endif %}
+{% endblock little_header %}
+
+
+{% block content %}
+<div style="text-align: center;">
+    <table border="1" width="50%" cellpadding="5">
+        <tr>
+            <td>{% trans "Ваш логин" %}</td>
+            <td>{{user.username}}</td>
+        </tr>
+        <tr>
+            <td>{% trans "Имя" %} &nbsp;</td>
+            <td>{{user.first_name}}</td>
+        </tr>
+        <tr>
+            <td>{% trans "Фамилия" %}</td>
+            <td>{{user.last_name}}</td>
+        </tr>
+        <tr>
+            <td>{% trans "Дата рождения" %}</td>
+            <td>{{ user.birth_date }}</td>
+        </tr>
+        <tr>
+            <td>{% trans "Почта" %}</td>
+            <td>{{user.email}}</td>
+        </tr>
+        <tr>
+            <td>ID</td>
+            <td>{{user.id}}</td>
+        </tr>
+        <tr>
+            <td>{% trans "Подписки" %}</td>
+            <td>{{ category }}</td>
+        </tr>
+        <tr>
+            <td>{% trans "Изменить часовой пояс" %}</td>
+            <td> {% get_current_timezone as TIME_ZONE %}
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <select name="timezone">
+                        {% for tz in timezones %}
+                        <option value="{{ tz }}" {% if tz == TIME_ZONE %} selected{% endif %}>{{ tz }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value={% trans "Set" %}>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>{% trans "Текущее время" %}</td>
+            <td>{{ current_time|timezone:TIME_ZONE }} {{ TIME_ZONE }}</td>
+            <!-- Отображаем время в выбранном часовом поясе  -->
+        </tr>
+
+    </table>
+    <hr>
+    <a class="btn btn-success" href="{% url 'edit_profile' user.id %}">{% trans "Редактировать профиль" %}</a>
+</div>
+
+
+{% endblock content %}

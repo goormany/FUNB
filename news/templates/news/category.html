@@ -1,0 +1,86 @@
+{% extends 'news/default.html' %}
+{% load custom_filters %}
+{% load i18n %}
+
+{% block head_title %}
+{{ PostCategory }}
+{% endblock head_title %}
+
+
+{% block header %}
+{% if user_is_anonymous %}
+<br><h4>{% trans "Пожалуйста, авторизуйтесь, чтобы подписаться на данную категорию новостей" %}</h4>
+{% else %}
+{% if is_subscribe %}
+<a class="btn btn-primary float-center" href="{% url 'unsubscribe' %}">{% trans "Отписаться" %}</a><br>
+<br><h4>{% trans "Если больше не желаете получать уведомление о новых новостях, нажмите отписаться" %}</h4>
+{% else %}
+<a class="btn btn-primary float-center" href="{% url 'subscribe' %}">{% trans "Подписаться" %}</a><br>
+<br><h4>{% trans "Если хотите получать уведомления о новых новостях, вы можете подписаться на данную категорию" %}</h4>
+{% endif %}
+{% endif %}
+{% endblock header %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 col-lg-10 mx-auto">
+        {% if PostCategory %}
+        <table width="100%" cellspacing="0" cellpadding="4">
+            <tr>
+                <td>
+                    <p style="text-align: center;"><strong>{% trans "Автор" %}</strong></p>
+                <td>
+                <td>
+                    <p style="text-align: center;"><strong>{% trans "Категория" %}</strong></p>
+                <td>
+                <td>
+                    <p style="text-align: center;"><strong>{% trans "Заголовок" %}</strong></p>
+                <td>
+                <td>
+                    <p style="text-align: center;"><strong>{% trans "Дата" %}</strong></p>
+                <td>
+                <td>
+                    <p style="text-align: center;"><strong>{% trans "Рейтинг" %}</strong></p>
+                <td>
+                <td>
+                    <p style="text-align: center;"><strong>{% trans "Действие" %}</strong></p>
+                <td>
+            <tr>
+                {% for post in category_news %}
+            <tr>
+                <td>
+                    <p style="text-align: center;">{{ post.post_author }}</p>
+                <td>
+                <td>
+                    <p style="text-align: center;">{{ post.post_categories }}</p>
+                <td>
+                <td width="3000">
+                    <a style="text-align: center;" href="{% url 'news_detail' post.id %}"> {{ post.headline|censor }}</a>
+                <td>
+                <td width="2000">
+                    <p style="text-align: center;">{{ post.date_create }}</p>
+                <td>
+                <td>
+                    <p style="text-align: center;">{{ post.post_rating }}</p>
+                <td>
+                <td>
+                    <a style="text-align: center;" href="{% url 'post_update' post.id %}"><u>{% trans "Редактировать" %}</u></a>
+                    <a style="text-align: right;" href="{% url 'post_delete' post.id %}"><u>{% trans "Удалить" %}</u></a>
+                <td>
+            <tr>
+                {% endfor %}
+        </table>
+        {% endif %}
+        <!-- Пагинация страниц -->
+        {% include 'news/paginate.html' %}
+
+        <!-- Pager -->
+        <div class="clearfix">
+            <a class="btn btn-primary float-right" href="{% url 'post_create' %}">{% trans "Добавить статью" %} &rarr;</a>
+        </div>
+
+    </div>
+</div>
+<hr>
+{% endblock content %}

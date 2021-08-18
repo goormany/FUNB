@@ -1,0 +1,38 @@
+{% extends 'news/default.html' %}
+{% load i18n %}
+
+
+{% block head_title %}
+{% trans "Добаление статьи" %}
+{% endblock head_title %}
+
+{% block header %}
+{% trans "Здесь вы сможете опубликовать свою новость или статью" %}
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-xl-10 mx-auto">
+            <h2 style="text-align: center;">{% trans "Заполните форму" %}</h2><br>
+            <form style="text-align: center;" method="POST">
+                {% csrf_token %}
+
+                {{ form.post_author }}<br>
+                <br>
+                {{ form.headline }}
+                <br>
+                {{ form.post_text }}
+                <br>
+                {{ form.post_category }}
+                <br>
+                <br>
+                {{ form.post_picture }}
+                <br>
+                <br>
+                <input type="submit" value="Добавить">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,48 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock head_title%}
+
+{% block header %}{% trans "Авторизация на сайте" %}{% endblock header %}
+
+{% block little_header %}
+<p>{% trans "Пожалуйста, войдите с одним из ваших существующих сторонних учетных записей, либо" %}
+    <a href="{{ signup_url }}">{% trans "зарегистрируйтесь" %},</a>
+    {% trans "если у вас еще нет аккаунта" %}:</p>
+{% endblock little_header %}
+
+{% block content %}
+<div style align="center" class="col-lg-6 col-md-10 mx-auto ">
+
+    {% get_providers as socialaccount_providers %}
+    {% if socialaccount_providers %}
+
+    <div>
+        <p>{% trans "Войти через" %} </p>
+        <button class="new"><h1>{% include "socialaccount/snippets/provider_list.html" with process="login" %}</h1></button>
+    </div>
+
+
+    <div class="login-or">{% trans 'or' %}</div>
+
+    {% include "socialaccount/snippets/login_extra.html" %}
+
+    {% else %}
+    <p>{% blocktrans %}If you have not created an account yet, then please
+        <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+    {% endif %}
+
+    <form class="login" method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
+        <br><br>
+        <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a><hr>
+    </form>
+</div>
+{% endblock %}

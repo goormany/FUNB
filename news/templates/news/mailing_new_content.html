@@ -1,0 +1,12 @@
+{% load i18n %}
+
+<table>
+    <tr>
+        <td>
+            <h1>{% trans "Уважаемый пользователь" %}</h1>
+            <p>{% trans "В подписанной вами категории" %} {{ category }} {% trans "появились новые публикации" %}!</p>
+            <a href="http://localhost:8000/{{ link }}" style="color:#0000ff">{{ new_post }}</a>
+        </td>
+
+    </tr>
+</table>

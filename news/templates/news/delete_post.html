@@ -1,0 +1,52 @@
+{% extends 'news/default.html' %}
+{% load custom_filters %}
+{% load i18n %}
+
+
+{% block head_title %}
+{% trans "Удаление статьи" %}
+{% endblock head_title %}
+
+
+{% block header %}
+
+<h2 style="text-align: center;" href="{{ post.id }}">{% trans "Вы действительно хотите удалить данный пост" %}?</h2> <br>
+
+<table class="row col-lg-20 col-lg-20 mx-auto" style="text-align: center;">
+    <tr>
+        <td>
+           <strong>{% trans "Автор" %}</strong>
+        <td>
+        <td>
+            <strong>{% trans "Категория" %}</strong>
+        <td>
+        <td>
+            <strong>{% trans "Заголовок" %}</strong>
+        <td>
+        <td>
+            <strong>{% trans "Рейтинг" %}</strong>
+        <td>
+    <tr>
+    <tr>
+        <td>
+            {{ post.post_author }}
+        <td>
+        <td>
+            {{ post.post_categories }}
+        <td>
+        <td>
+            {{ post.headline|censor }}
+        <td>
+        <td>
+            {{ post.post_rating }}
+        <td>
+    <tr>
+</table>
+<br>
+<form style="text-align: center;" href="{{ post.id }}" method="POST">
+    {% csrf_token %}
+    <input class=" btn btn-danger mx-auto" type="submit" value={% trans "подтвердить" %}>
+</form>
+
+
+{% endblock header %}

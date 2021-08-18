@@ -1,0 +1,42 @@
+{% extends 'news/default.html' %}
+{% load custom_filters %}
+{% load i18n %}
+
+
+<!-- Название страницы -->
+{% block head_title %}
+{% trans "Новости дня" %}
+{% endblock head_title %}
+
+
+<!-- Название афишы -->
+{% block header %}
+{{ detail_news.headline|censor }}
+{% endblock header %}
+
+{% block little_header %}
+
+{% endblock little_header %}
+
+
+<!-- В контенте на странице мы выводим выбраннуй новость -->
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="post-preview">
+            <p class="post-title">
+            <p style="text-align: justify;">{{ detail_news.post_text|censor }}</p>
+            <p class="post-meta">Posted by
+                <a href="#">{{ detail_news.post_author }}</a>
+                {{ detail_news.date_create|date:'d M Y h:m' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+
+
+

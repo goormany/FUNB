@@ -1,0 +1,39 @@
+
+pip install -r requirements.txt
+pip freeze > requirements.txt
+
+python manage.py createsuperuser
+
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+python manage.py runserver
+
+
+celery -A NewsPaperD worker -l INFO
+
+
+python3 manage.py check --deploy
+python3 manage.py dumpdata --format=xml > mydata.xml
+python3 manage.py delete_news Спорт
+python3 manage.py dumpdata --format=json news > news.json 
+python3 manage.py loaddata news.json
+
+django-admin compilemessages -l en
+django-admin makemessages -l en 
+
+python manage.py makemessages -l 
+python manage.py compilemessages
+
+
+
+
+
+
+lena@mail.ru   автор
+serik@mail.ru  автор
+mail@mail.ru   автор
+berik@mail.ru
+ivan@mail.ru
+пароль для всех один -- acer1234
+
