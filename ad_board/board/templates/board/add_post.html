@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% extends 'board/base.html' %}
+{% load custom_filters %}
+
+
+{% block head_title %}
+{{ block.super }} : Добавить пост
+{% endblock head_title%}
+
+{% block sidebar %}
+{% include 'board/sidebar.html' %}
+{%endblock sidebar%}
+
+{% block body %}
+<div class="col-md-8">
+    <h2 style="text-align: center;">Заполните форму</h2><br>
+    <form  method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media}}
+        {{ form.as_p }}
+
+        <input type="submit" class="btn btn-primary btn-block" value="Добавить">
+    </form>
+</div>
+{%endblock body%}

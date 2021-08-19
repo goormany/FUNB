@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% extends 'board/base.html' %}
+{% load custom_filters %}
+
+
+{% block head_title %}
+{{ block.super }}
+{% endblock head_title%}
+
+{% block sidebar %}
+{% include 'board/sidebar.html' %}
+{%endblock sidebar%}
+
+
+{% block body %}
+<div class="col-md-8">
+
+    {% for post in post_list %}
+    {% include 'board/post_card.html' %}
+    {% endfor %}
+    
+    <!-- Пагинация страниц -->
+    {% include 'board/paginate.html' %}
+</div>
+{%endblock body%}

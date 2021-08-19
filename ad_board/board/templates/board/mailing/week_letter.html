@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% load i18n %}
+
+
+<body>
+<h1 style="color:#f02323">{% trans "Добрый день!" %}</h1>
+<p style="color:#f02323">За прошедшую неделю появились новые посты:</p>
+<table>
+    {% for post in posts %}
+    <tr>
+        <td>       
+            <a href="{{ post.id }}" style="color:#0000ff">{{ post.headline }}</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</body>

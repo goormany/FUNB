@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+{% extends 'board/base.html' %}
+{% load static %}
+
+
+{% block head_title %}
+{{ block.super }} : {{post_detail}}
+{% endblock head_title%}
+
+{% block sidebar %}
+{% include 'board/sidebar.html' %}
+{%endblock sidebar%}
+
+{% block body %}
+<div class="col-md-8">
+
+    <div class="card text-center mb-3">
+        <div class="card-header">
+            <h5>{{post_detail.headline}}</h5>
+        </div>
+        <div class="card">
+            <div class="post_text">
+
+                {% if post_detail.post_picture %}
+                <img width="300" src="{{ post_detail.post_picture.url }}" alt="preview">
+                {% endif %}
+
+                <p>{{post_detail.content|safe}}</p>
+
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            <div class="category1">
+            <p>Автор: {{post_detail.post_author}}</p>
+            <p>Категория: {{ post_detail.post_category }}</p>
+            </div>
+            <p style="text-align: right;">{{post_detail.date_create|date}}</p>
+            <form style="text-align: right;" action=" {% url 'post_like' post_detail.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" name="post_like" value="{{post_detail.id}}" class="fa fa-thumbs-up">like
+                    {{post_detail.count_like}}</button>
+                <button type="submit" name="post_dislike" value="{{post_detail.id}}" class="fa fa-thumbs-down">Unlike
+                    {{post_detail.count_dislike}}</button>
+            </form>
+        </div><br>
+
+
+        <table width="100%">
+            <tr>
+
+                <td>
+                    {% if user.is_authenticated %}
+                    {% if is_not_author %}
+                    <form action="{% url 'post_response' post_detail.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" name="post_response" value="{{post_detail.id}}"
+                            class="btn btn-primary mb-3">Откликнуться</button>
+                    </form>
+                    {%endif%}
+                    {% endif %}
+                </td>
+            </tr>
+
+            {% if is_author %}
+            <tr>
+                <td><a class="btn btn-success mb-3" href="{% url 'update_post' post_detail.pk %}">ИЗМЕНИТЬ</a></td>
+                <td>
+                    <a class="btn btn-danger mb-3" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        УДАЛИТЬ
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="text-align: justify;">
+                        <a class="dropdown-item" href="{% url 'post_delete' post_detail.pk %}">ПОДТВЕРДИТЬ</a>
+                    </div>
+
+                </td>
+            </tr>
+            {% endif %}
+        </table>
+
+        <div class="card-footer text-muted">
+            <h2 style="text-align: center;">Комментарии:</h2> <br>
+
+
+
+            {% if all_comments %}
+            {% for comment in all_comments %}
+            <div class="contain">
+
+                <div class="ava">
+                    {% if comment.comment_author.photo %}
+                    <img src="{{ comment.comment_author.photo.url }}" width="60" alt="avatar">
+                    {% else %}
+                    <img src="{% static 'board/img/default_avatar.jpg' %}" width="60" alt="avatar">
+                    {% endif %}
+                    <p>{{comment.comment_author}}</p>
+                </div>
+
+                <div class="content">
+                    <p style="text-align: justify;">{{ comment.comment_text }}</p>
+                    <p style="text-align: right;">{{ comment.comment_date }}</p>
+                </div>
+            </div><br>
+                {% endfor %}
+                {% endif %}
+            
+
+            <form style="text-align: left;" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="btn btn-primary btn-block" value="Ответить">
+            </form>
+        </div>
+
+
+    </div>
+
+</div>
+{%endblock body%}

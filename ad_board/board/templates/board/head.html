@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% load custom_filters %}
+{% load static %}
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        type="text/css">
+        
+    <link rel="stylesheet" href="{% static 'board/css/index.css' %}">
+
+    <style>
+        table {
+            margin: auto;
+            /* Выравниваем таблицу по центру окна  */
+            border: 0px solid #666;
+        }
+
+        .td_profile {
+            text-align: center;
+            /* Выравниваем текст по центру ячейки */
+            background: -webkit-gradient(linear, 0 0, 0 100%, from(#e3f0f1), to(#eef5f5));
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00BBD6', endColorstr='#EBFFFF');
+            padding: 3px 7px;
+            color: #333;
+            -moz-border-radius: 0px;
+            -webkit-border-radius: 0px;
+            border-radius: 0px;
+            border: 0px solid #666;
+        }
+
+        body {
+            background-color: rgb(253, 253, 253)
+        }
+
+        .okno {
+            width: 1020px;
+            height: 30px;
+            text-align: center;
+            border: 1px solid #bebee2;
+            border-radius: 10px;
+            color: #0000cc;
+        }
+
+        .errorlist {
+            color: #0000cc;
+        }
+
+        .post_text {
+            text-align: left;
+            padding: 3%;
+            margin-top: -3ch;
+        }
+
+        .post_text img {
+            margin-top: 3ch;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .col-md-8 p img {
+            height: initial !important;
+            width: 100% !important;
+        }
+
+        .col-md-8 p iframe {
+            width: 100% !important;
+        }
+        
+        .category1 {
+            display: flex;
+            justify-content: space-between;
+        }
+
+    </style>
+
+    <title>{% block head_title %}Фан сайт{% endblock head_title%}</title>
+</head>

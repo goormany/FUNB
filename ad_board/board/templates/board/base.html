@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+{% load custom_filters %}
+{% load static %}
+
+
+<html lang="en">
+
+{% include "board/head.html" %}
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'posts' %}">Главная</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'add_post' %}">Добавить пост</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Личный кабинет
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'profile' %}">Профиль</a></li>
+                            <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Редактировать</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+
+
+                    </li>
+
+                </ul>
+
+                <form action="{% url 'search_post' %}" method="get" class="d-flex">
+                    {% csrf_token %}
+                    <input type="search" placeholder="Поиск" name="search" class="form-control me-2" aria-label="Поиск">
+                    <button class="btn btn-outline-success" type="submit">Поиск</button>
+                </form>
+                {% if user.is_authenticated %}
+                <li class="navbar-nav">
+                    <a class="nav-link active" href="{% url 'account_logout' %}">Выйти</a>
+                </li>
+                {% else %}
+                <li class="navbar-nav">
+                    <a class="nav-link active" href="{% url 'account_login' %}">Регистрация<br>Войти</a>
+                </li>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="okno">
+            <p style="color: #ff0000;">{{message}}</p>
+        </div>
+        {% endfor %}
+        {%endif%}
+    </div>
+
+    <div class="container mt-3">
+        <div class="row">
+
+            {% block sidebar %}
+            {%endblock sidebar%}
+
+            {% block body %}
+            {%endblock body%}
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+        
+</body>
+
+</html>

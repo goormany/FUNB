@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+
+<style>
+    .fa {
+        color: white;
+        background-color: cornflowerblue;
+    }
+
+    td {
+        background: transparent;
+        /* Цвет фона ячеек */
+    }
+</style>
+
+
+<div class="card text-center mb-3">
+
+    <div class="card-header">
+        <h5 class="card-title">{{post.headline}}</h5>
+    </div>
+
+    <div class="card">
+        {% if post.post_picture %}
+        <img src="{{ post.post_picture.url }}">
+        {% endif %}
+
+        <div class="card-body">
+            {{post.content|safe|truncatewords:10}}
+            <a href="{{ post.get_absolute_url }}" class="btn btn-secondary float-right">Подробнее ..</a>
+        </div>
+    </div>
+
+    <div class="card-footer text-muted">
+        <table width="100%">
+            <tr>
+                <td>
+                    <p style="text-align: justify;">{{post.date_create|date}}</p>
+                </td>
+                Категория: {{ post.post_category }}
+
+                <td>
+                    <form action="{% url 'post_like' post.id %}" method="POST" style="text-align: right; ">
+                        {% csrf_token %}
+                        <button type="submit" name="post_like" value="{{post.id}}" class="fa fa-thumbs-up">like
+                            {{post.count_like}}</button>
+                        <button type="submit" name="post_dislike" value="{{post.id}}"
+                            class="fa fa-thumbs-down">Unlike {{post.count_dislike}}</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

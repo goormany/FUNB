@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+{% load i18n %}
+
+<table>
+    <tr>
+        <td>
+            <h1>{% trans "Уважаемый" %} {{ username }}</h1>
+            <p>{% trans "Ваш отклик был принят" %}!</p>
+            <a href="{{ link }}" style="color:#0000ff">{{ content }}</a>
+        </td>
+
+    </tr>
+</table>

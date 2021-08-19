@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% extends 'board/base.html' %}
+
+{% block head_title %}
+{{ block.super }}: Поиск по сайту
+{% endblock head_title%}
+
+{% block sidebar %}
+{% include 'board/sidebar.html' %}
+{%endblock sidebar%}
+
+{% block body %}
+<div class="col-md-8">
+    <h2 style="text-align: center;">Поиск по сайту</h2><br>
+
+    <!-- Перед результатами добавим расширенную форму для поиска -->
+    <form method="GET">
+        {{ search_filter.form.as_p }}
+        <input type="submit" class="btn btn-secondary" value="Найти">
+    </form><br>
+    
+    <!-- Результаты поиска из навбара-->
+    {% if search_list %}
+    <h5 style="text-align: center;">Найдено статей: {{ search_list|length }}</h5><br>
+    {% for post in search_list %}
+    {% include 'board/post_card.html' %}
+    {% endfor %}
+    {% else %}
+
+    <!-- Результаты поиска по расширенной форме-->
+    {% if search_filter.qs %}
+    <h5 style="text-align: center;">Найдено статей: {{ search_filter.qs|length }}</h5><br>
+    {% for post in search_filter.qs %}
+    {% include 'board/post_card.html' %}
+    {% endfor %}
+    {% else %}
+    <h5 style="text-align: center;">Ничего не найдено</h5><br>
+    {% endif %}
+    {% endif %}
+
+</div>
+{%endblock body%}

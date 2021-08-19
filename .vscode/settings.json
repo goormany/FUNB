@@ -1,0 +1,15 @@
+{
+    "python.pythonPath": "venv/bin/python",
+
+    "python.linting.pylintArgs": [
+        "--disable=C0114", // missing-module-docstring
+        "--load-plugins=pylint_django",
+        "--disable=django-not-configured",
+        "--django-settings-module=ad_board.settings",
+    ],
+    "cSpell.ignoreWords": [
+        "form",
+        "signup",
+        "навбара"
+    ],
+}

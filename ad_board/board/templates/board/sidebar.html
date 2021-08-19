@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load custom_filters %}
+
+
+<div class="col-md-3">
+    <div class="list-group">
+        {% get_categories as categories%}
+        {% for category in categories %}
+        <a href="{% url 'category' category.pk %}" class="list-group-item list-group-item-action">
+            {{ category.category }}
+        </a>
+        {% endfor %}
+
+        {% block add_category %}
+        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Добавить категорию
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <form method="POST" enctype="multipart/form-data" style="text-align: center;">
+                {% csrf_token %}
+                {{ form.category }}
+                <input type="submit" class="btn btn-primary btn-block" value="Добавить">
+            </form>
+        </ul>
+        {%endblock add_category%}
+
+    </div>
+</div>
